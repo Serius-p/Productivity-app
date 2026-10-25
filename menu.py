@@ -1,14 +1,17 @@
 from goals import Goals
+from datetime import date
 
 class Menu:
     def __init__(self):
         self.menu_list = ["1.New Goal", "2.View Goals", "3.Exit"]
         self.goals = Goals()
+        self.today = date.today()
 
     def menu_options(self):
 
         while True:
-            print("\n==Productivity Manager==\n")
+            print("\n==Productivity Manager==")
+            print(f"Date:{self.today}\n")
             for options in self.menu_list:
                 print(options)
             try:
@@ -23,7 +26,7 @@ class Menu:
                 if type_choice == 1:
                     self.goals.add_logic()
                 elif type_choice == 2:
-                    print("Habit goals are not implemented yet.")
+                    self.goals.add_logic2()
 
             if menu_choice == 2:
                 if not self.goals.tasks:
@@ -72,6 +75,7 @@ class Menu:
                                 print(f"Description: {task['description']}")
                                 print(f"Due date: {task['date']}")
                                 print(f"Completed: {task['status']}")
+                                print(f"Deadline in: {(task["date"]-self.today).days} days")
                             else:
                                 print("Invalid task number!")
                                 continue
