@@ -39,9 +39,9 @@ class Menu:
                 print("\nChoose Goal Type:\n1.Task\n2.Habit")
                 type_choice = int(input("\n>>>>>: "))
                 if type_choice == 1:
-                    self.goals.add_logic()
+                    self.goals.add_task()
                 elif type_choice == 2:
-                    self.goals.add_logic2()
+                    self.goals.add_habit()
 
             if menu_choice == 2:
                 if not self.goals.tasks:
@@ -59,77 +59,34 @@ class Menu:
                     while not decision_2:
                         print(f"{"-"*25}\n1.Edit\n2.View details\n3.Delete\n4.Mark task as complete\n5.Back\n{"-"*25}")
                         try:
-                            dec2_choice = int(input("\n>>>>>: "))
+                            dec2_choice = int(input(">>>>>: "))
                         except Exception:
                             print("Invalid Choice!")
                             continue
                 #Choice is edit
                         if dec2_choice == 1:
-                            try:
-                                edit_choice = int(input("\nChoose task\n>>>>>: "))
-                            except ValueError:
-                                print("Invalid task number!")
-                                continue
-
-                            task_index = edit_choice - 1
-                            if 0 <= task_index < len(self.goals.tasks):
-                                task = self.goals.tasks[task_index]
-                                task["name"] = input("Name: ")
-                                task["description"] = input("Description: ")
-                                task["date"] = input("Due date: ")
-                                print("\nThe task has been updated!")
+                            edit_choice = self.goals.task_or_habit()
+                            if edit_choice == 1:
+                                self.goals.edit_task()
                             decision_2 = True
                 #Choice is view
                         elif dec2_choice == 2:
-                            try:
-                                view_choice = int(input("\nChoose task\n>>>>>: "))
-                            except ValueError:
-                                print("Invalid task number!")
-                                continue
-
-                            task_index = view_choice - 1
-                            if 0 <= task_index < len(self.goals.tasks):
-                                #Checks that the choice isn´t negative, also that it´s less than the number of tasks.
-                                task = self.goals.tasks[task_index]
-                                print(f"\nName: {task['name']}")
-                                print(f"Description: {task['description']}")
-                                print(f"Due date: {task['date']}")
-                                print(f"Completed: {task['status']}")
-                                print(f"Deadline in: {(task["date"]-self.today).days} days")
-                            else:
-                                print("Invalid task number!")
-                                continue
+                            edit_choice = self.goals.task_or_habit()                   
+                            if edit_choice == 1:
+                                self.goals.view_task()
                             decision_2 = True
                 #Choice is delete
                         elif dec2_choice == 3:
-                            try:
-                                del_choice = int(input("\nChoose task\n>>>>>: "))
-                            except Exception:
-                                print("Invalid task number!")
-                                continue
-
-                            task_index = del_choice - 1
-                            if 0 <= task_index < len(self.goals.tasks):
-                                self.goals.tasks.pop(task_index)
-                                print("The task has been deleted!")
-                            else:
-                                print("Invalid task number!")
-                                continue
+                            edit_choice = self.goals.task_or_habit()
+                            if edit_choice == 1:
+                                self.goals.delete_task()
                             decision_2 = True
                 #Choice is Mark task as complete
                         elif dec2_choice == 4:
-                            try:
-                                mark_choice = int(input("\nChoose task\n>>>>>: "))
-                            except Exception:
-                                print("Invalid task number!")
-                                continue
-
-                            task_index = mark_choice - 1
-                            if 0 <= task_index < len(self.goals.tasks):
-                                task = self.goals.tasks[task_index]
-                                task["status"] = True
-                                print("\nTask has been marked as complete!")
-                                decision_2 = True
+                            edit_choice = self.goals.task_or_habit()                            
+                            if edit_choice == 1:
+                                self.goals.complete_task()
+                            decision_2 = True
                 #Choise is to go back
                         elif dec2_choice == 5:
                             decision_2 = True
