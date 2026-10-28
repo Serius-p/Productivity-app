@@ -34,7 +34,7 @@ class Goals:
             try:
                 name = input("Name: ")
                 description = input("Description: ")
-                start_date = date.fromisoformat(input("Start date: "))
+                start_date = date.fromisoformat(input("Start date (YYYY-MM-DD): "))
                 if start_date < date.today():
                     print("Invalid date!\n")
                     continue

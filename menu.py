@@ -1,11 +1,26 @@
 from goals import Goals
 from datetime import date
+import json
+from pathlib import Path
 
 class Menu:
     def __init__(self):
         self.menu_list = ["1.New Goal", "2.View Goals", "3.Exit"]
         self.goals = Goals()
         self.today = date.today()
+        self.data_file = Path(__file__).with_name("task_data.json")
+        self.data_file2 = Path(__file__).with_name("habit_data.json")
+        try:
+            with self.data_file.open("r") as f:
+                with self.data_file2.open("r") as f2:
+                    self.goals.tasks = json.load(f)
+                    self.goals.habits = json.load(f2)
+            for task in self.goals.tasks:
+                task["date"] = date.fromisoformat(task["date"])
+            for habit in self.goals.habits:
+                habit["start_date"] = date.fromisoformat(habit["start_date"])
+        except FileNotFoundError:
+            pass
 
     def menu_options(self):
 
@@ -30,10 +45,15 @@ class Menu:
 
             if menu_choice == 2:
                 if not self.goals.tasks:
-                    print("No goals added yet.")
+                    if not self.goals.habits:
+                        print("No goals added yet.")                
                 else:
+                    print("--TASKS--")
                     for number, task in enumerate(self.goals.tasks, start=1):
                         print(f"{number}. {task['name']}")
+                    print("\n--HABITS--")
+                    for number, habit in enumerate(self.goals.habits, start=1):
+                        print(f"{number}. {habit["name"]}")
 
                     decision_2 = False
                     while not decision_2:
@@ -116,8 +136,13 @@ class Menu:
 
             if menu_choice == 3:
                 print("Saving data..")
+                with self.data_file.open("w") as f:
+                    json.dump(self.goals.tasks, f, default=date.isoformat)
+                with self.data_file2.open("w") as f:
+                    json.dump(self.goals.habits, f, default=date.isoformat)
                 print("Done!")
                 break
 
-start = Menu()
-start.menu_options()
+if __name__ == "__main__":
+    start = Menu()
+    start.menu_options()
