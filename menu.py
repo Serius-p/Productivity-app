@@ -10,6 +10,7 @@ class Menu:
         self.today = date.today()
         self.data_file = Path(__file__).with_name("task_data.json")
         self.data_file2 = Path(__file__).with_name("habit_data.json")
+        #Loading saved data
         try:
             with self.data_file.open("r") as f:
                 with self.data_file2.open("r") as f2:
@@ -31,23 +32,33 @@ class Menu:
                 print(options)
             try:
                 menu_choice = int(input("\n>>>>>: "))
+                if menu_choice > 3:
+                    print("Invalid choice!")
+                    continue
             except Exception:
                 print("Invalid Choice!")
                 continue
 
             if menu_choice == 1:
                 print("\nChoose Goal Type:\n1.Task\n2.Habit")
-                type_choice = int(input("\n>>>>>: "))
-                if type_choice == 1:
-                    self.goals.add_task()
-                elif type_choice == 2:
-                    self.goals.add_habit()
+                try:
+                    type_choice = int(input("\n>>>>>: "))
+                    if type_choice == 1:
+                        self.goals.add_task()
+                        continue
+                    elif type_choice == 2:
+                        self.goals.add_habit()
+                        continue
+                except Exception:
+                    print("Invalid input!")
+                    continue
 
             if menu_choice == 2:
-                if not self.goals.tasks:
-                    if not self.goals.habits:
-                        print("No goals added yet.")                
-                else:
+                self.goals.goal_exist()
+                
+                if self.goals.goal_exist() == 1:
+                    print("No goals added yet!")
+                elif self.goals.goal_exist() == 2:
                     print("--TASKS--")
                     for number, task in enumerate(self.goals.tasks, start=1):
                         print(f"{number}. {task['name']}")
@@ -57,7 +68,7 @@ class Menu:
 
                     decision_2 = False
                     while not decision_2:
-                        print(f"{"-"*25}\n1.Edit\n2.View details\n3.Delete\n4.Mark task as complete\n5.Back\n{"-"*25}")
+                        print(f"{"-"*30}\n1.Edit\n2.View details\n3.Delete\n4.Mark task as complete\n5.Back\n{"-"*30}")
                         try:
                             dec2_choice = int(input(">>>>>: "))
                         except Exception:
@@ -68,24 +79,32 @@ class Menu:
                             edit_choice = self.goals.task_or_habit()
                             if edit_choice == 1:
                                 self.goals.edit_task()
+                            elif edit_choice == 2:
+                                self.goals.edit_habit()
                             decision_2 = True
                 #Choice is view
                         elif dec2_choice == 2:
                             edit_choice = self.goals.task_or_habit()                   
                             if edit_choice == 1:
                                 self.goals.view_task()
+                            elif edit_choice == 2:
+                                self.goals.view_habit()
                             decision_2 = True
                 #Choice is delete
                         elif dec2_choice == 3:
                             edit_choice = self.goals.task_or_habit()
                             if edit_choice == 1:
                                 self.goals.delete_task()
+                            elif edit_choice == 2:
+                                self.goals.delete_habit()
                             decision_2 = True
                 #Choice is Mark task as complete
                         elif dec2_choice == 4:
                             edit_choice = self.goals.task_or_habit()                            
                             if edit_choice == 1:
                                 self.goals.complete_task()
+                            elif edit_choice == 2:
+                                print("Can`t mark habit as complete!")
                             decision_2 = True
                 #Choise is to go back
                         elif dec2_choice == 5:
@@ -103,3 +122,5 @@ class Menu:
 if __name__ == "__main__":
     start = Menu()
     start.menu_options()
+
+#print(f"\n{"-"*30}")

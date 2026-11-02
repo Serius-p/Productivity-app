@@ -6,6 +6,30 @@ class Goals:
         self.habits = []
         self.today = date.today()
 
+    def task_or_habit(self):
+        toh_choosen = False
+        while not toh_choosen:
+            try:
+                choice = int(input("\n1.Task\n2.Habit\n>>>>>: "))
+                if choice == 1:
+                    return 1
+                elif choice == 2:
+                    return 2
+                else:
+                    print("Invalid choice!")
+                    continue
+            except ValueError:
+                print("Invalid input!")
+                continue
+
+    def goal_exist(self):
+        if self.tasks:
+            return 2
+        elif self.habits:
+            return 2
+        else:
+            return 1
+
     def add_task(self):
         task_added = False
         while not task_added:
@@ -28,22 +52,6 @@ class Goals:
             "status": False,
         })        
         print("\nThe task has been added!")
-
-    def task_or_habit(self):
-        toh_choosen = False
-        while not toh_choosen:
-            try:
-                choice = int(input("\n1.Task\n2.Habit\n>>>>>: "))
-                if choice == 1:
-                    return 1
-                elif choice == 2:
-                    return 2
-                else:
-                    print("Invalid choice!")
-                    continue
-            except ValueError:
-                print("Invalid input!")
-                continue
 
     def add_habit(self):
         habit_added = False
@@ -74,6 +82,10 @@ class Goals:
         print("\nThe habit has been added!")
 
     def edit_task(self):
+        if not self.tasks:
+            print("No tasks added!")
+            return breakpoint
+        else: pass
         task_edited = False
         while not task_edited:
             try:
@@ -94,6 +106,10 @@ class Goals:
                 continue
 
     def view_task(self):
+        if not self.tasks:
+            print("No tasks added!")
+            return breakpoint
+        else: pass
         task_viewed = False
         while not task_viewed:
             try:
@@ -102,11 +118,13 @@ class Goals:
                 #Checks that the choice isn´t negative, also that it´s less than the number of tasks.
                 if 0 <= task_index < len(self.tasks):
                     task = self.tasks[task_index]
-                    print(f"\nName: {task['name']}")
+                    print(f"\n{"-"*30}")
+                    print(f"Name: {task['name']}")
                     print(f"Description: {task['description']}")
                     print(f"Due date: {task['date']}")
                     print(f"Completed: {task['status']}")
                     print(f"Deadline in: {(task["date"]-self.today).days} days")
+                    print(f"{"-"*30}")
                     task_viewed = True
                 else:
                     print("Invalid task number!")
@@ -116,6 +134,10 @@ class Goals:
                 continue
 
     def delete_task(self):
+        if not self.tasks:
+            print("No tasks added!")
+            return breakpoint
+        else: pass
         task_deleted = False
         while not task_deleted:
             try:
@@ -133,6 +155,10 @@ class Goals:
                 continue
 
     def complete_task(self):
+        if not self.tasks:
+            print("No tasks added!")
+            return breakpoint
+        else: pass
         task_complete = False
         while not task_complete:
             try:
@@ -145,6 +171,83 @@ class Goals:
                     task_complete = True
                 else:
                     print("Invalid task number!")
+                    continue
+            except Exception:
+                print("Invalid input!")
+                continue
+#--------------------------------------HABIT EDITOR----------------------------------#
+
+    def edit_habit(self):
+        if not self.habits:
+            print("No habits added!")
+            return breakpoint
+        else: pass
+        habit_edited = False
+        while not habit_edited:
+            try:
+                habit_choice = int(input("\nChoose habit\n>>>>>: "))
+                habit_index = habit_choice - 1
+                if 0 <= habit_index < len(self.habits):
+                    habit = self.habits[habit_index]
+                    habit["name"] = input("Name: ")
+                    habit["description"] = input("Description: ")
+                    habit["start_date"] = date.fromisoformat(input("Start date (YYYY-MM-DD): "))
+                    if habit["start_date"] < date.today():
+                        print("Invalid date!")
+                        continue
+                    habit["frequency"] = int(input("Practice Frequency / Week: "))
+                    if habit["frequency"] > 7:
+                        print("Invalid input!")
+                        continue
+                    else:
+                        print("\nThe habit has been updated!")
+                        habit_edited = True
+            except Exception:
+                print("Invalid input!")
+                continue
+
+    def view_habit(self):
+        if not self.habits:
+            print("No habits added!")
+            return breakpoint
+        else: pass
+        habit_viewed = False
+        while not habit_viewed:
+            try:
+                habit_choice = int(input("\nChoose habit\n>>>>>: "))
+                habit_index = habit_choice - 1
+                if 0 <= habit_index < len(self.habits):
+                    habit = self.habits[habit_index]
+                    print(f"\n{"-"*30}")
+                    print(f"Name: {habit["name"]}")
+                    print(f"Description: {habit["description"]}")
+                    print(f"Start date: {habit["start_date"]}")
+                    print(f"Practice Frequency / Week: {habit["frequency"]}")
+                    print(f"{"-"*30}")
+                    habit_viewed = True
+                else:
+                    print("Invalid choice!")
+                    continue
+            except Exception:
+                print("Invaid input!")
+                continue
+
+    def delete_habit(self):
+        if not self.habits:
+            print("No habits added!")
+            return breakpoint
+        else: pass
+        habit_deleted = False
+        while not habit_deleted:
+            try:
+                habit_choice = int(input("\nChoose habit\n>>>>>: "))
+                habit_index = habit_choice - 1
+                if 0 <= habit_index < len(self.habits):
+                    self.habits.pop(habit_index)
+                    print("The habit has been deleted!")
+                    habit_deleted = True
+                else:
+                    print("Invalid choice!")
                     continue
             except Exception:
                 print("Invalid input!")
