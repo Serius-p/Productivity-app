@@ -32,10 +32,10 @@ class Menu:
                 print(options)
             try:
                 menu_choice = int(input("\n>>>>>: "))
-                if menu_choice > 3:
+                if 0 <= menu_choice > 3:
                     print("Invalid choice!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invalid Choice!")
                 continue
 
@@ -49,13 +49,13 @@ class Menu:
                     elif type_choice == 2:
                         self.goals.add_habit()
                         continue
-                except Exception:
+                except ValueError:
                     print("Invalid input!")
                     continue
 
             if menu_choice == 2:
                 self.goals.goal_exist()
-                
+
                 if self.goals.goal_exist() == 1:
                     print("No goals added yet!")
                 elif self.goals.goal_exist() == 2:
@@ -71,7 +71,7 @@ class Menu:
                         print(f"{"-"*30}\n1.Edit\n2.View details\n3.Delete\n4.Mark task as complete\n5.Back\n{"-"*30}")
                         try:
                             dec2_choice = int(input(">>>>>: "))
-                        except Exception:
+                        except ValueError:
                             print("Invalid Choice!")
                             continue
                 #Choice is edit

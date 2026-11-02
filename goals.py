@@ -41,7 +41,7 @@ class Goals:
                     print("Invalid date!\n")
                     continue
                 else: pass
-            except Exception:
+            except ValueError:
                 print("Invalid input!\n ")
                 continue
             task_added = True
@@ -65,11 +65,11 @@ class Goals:
                     continue
                 else: pass
                 frequency = int(input("Practice Frequency / Week: "))
-                if frequency >= 8:
-                    print("Invalid input!\n")
+                if 0 <= frequency >= 8:
+                    print("Frequency must be between 1 & 7!\n")
                     continue
                 else: pass
-            except Exception:
+            except ValueError:
                 print("Invalid input!\n")
                 continue
             habit_added = True
@@ -84,7 +84,7 @@ class Goals:
     def edit_task(self):
         if not self.tasks:
             print("No tasks added!")
-            return breakpoint
+            return
         else: pass
         task_edited = False
         while not task_edited:
@@ -93,22 +93,26 @@ class Goals:
                 task_index = task_choice - 1
                 if 0 <= task_index < len(self.tasks):
                     task = self.tasks[task_index]
-                    task["name"] = input("Name: ")
-                    task["description"] = input("Description: ")
-                    task["date"] = date.fromisoformat(input("Due date (YYYY-MM-DD): "))
-                    print("\nThe task has been updated!")
+                    task_name = input("Name: ")
+                    task_description = input("Description: ")
+                    task_date = date.fromisoformat(input("Due date (YYYY-MM-DD): "))
                     task_edited = True
                 else:
                     print("Invalid choice!")
                     continue
-            except Exception:
+                if task_edited:
+                    task["name"] = task_name
+                    task["description"] = task_description
+                    task["due_date"] = task_date
+                    print("\nThe task has been updated!")
+            except ValueError:
                 print("Invalid input!")
                 continue
 
     def view_task(self):
         if not self.tasks:
             print("No tasks added!")
-            return breakpoint
+            return
         else: pass
         task_viewed = False
         while not task_viewed:
@@ -129,14 +133,14 @@ class Goals:
                 else:
                     print("Invalid task number!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invalid input!")
                 continue
 
     def delete_task(self):
         if not self.tasks:
             print("No tasks added!")
-            return breakpoint
+            return
         else: pass
         task_deleted = False
         while not task_deleted:
@@ -150,14 +154,14 @@ class Goals:
                 else:
                     print("Invalid task number!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invalid input!")
                 continue
 
     def complete_task(self):
         if not self.tasks:
             print("No tasks added!")
-            return breakpoint
+            return
         else: pass
         task_complete = False
         while not task_complete:
@@ -172,7 +176,7 @@ class Goals:
                 else:
                     print("Invalid task number!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invalid input!")
                 continue
 #--------------------------------------HABIT EDITOR----------------------------------#
@@ -180,7 +184,7 @@ class Goals:
     def edit_habit(self):
         if not self.habits:
             print("No habits added!")
-            return breakpoint
+            return
         else: pass
         habit_edited = False
         while not habit_edited:
@@ -202,14 +206,14 @@ class Goals:
                     else:
                         print("\nThe habit has been updated!")
                         habit_edited = True
-            except Exception:
+            except ValueError:
                 print("Invalid input!")
                 continue
 
     def view_habit(self):
         if not self.habits:
             print("No habits added!")
-            return breakpoint
+            return
         else: pass
         habit_viewed = False
         while not habit_viewed:
@@ -228,14 +232,14 @@ class Goals:
                 else:
                     print("Invalid choice!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invaid input!")
                 continue
 
     def delete_habit(self):
         if not self.habits:
             print("No habits added!")
-            return breakpoint
+            return
         else: pass
         habit_deleted = False
         while not habit_deleted:
@@ -249,6 +253,6 @@ class Goals:
                 else:
                     print("Invalid choice!")
                     continue
-            except Exception:
+            except ValueError:
                 print("Invalid input!")
                 continue
