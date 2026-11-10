@@ -96,6 +96,9 @@ class Goals:
                     task_name = input("Name: ")
                     task_description = input("Description: ")
                     task_date = date.fromisoformat(input("Due date (YYYY-MM-DD): "))
+                    if task_date < date.today():
+                        print("Invalid date!\n")
+                        continue
                     task_edited = True
                 else:
                     print("Invalid choice!")
