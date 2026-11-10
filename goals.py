@@ -48,7 +48,7 @@ class Goals:
         self.tasks.append({
             "name": name,
             "description": description,
-            "date": due_date,
+            "due_date": due_date,
             "status": False,
         })        
         print("\nThe task has been added!")
@@ -65,7 +65,7 @@ class Goals:
                     continue
                 else: pass
                 frequency = int(input("Practice Frequency / Week: "))
-                if 0 <= frequency >= 8:
+                if not 1 <= frequency <= 7:
                     print("Frequency must be between 1 & 7!\n")
                     continue
                 else: pass
@@ -203,8 +203,8 @@ class Goals:
                         print("Invalid date!")
                         continue
                     habit_frequency = int(input("Practice Frequency / Week: "))
-                    if 0 > habit_frequency > 7:
-                        print("Invalid input!")
+                    if not 1 <= habit_frequency <= 7:
+                        print("Frequency must be between 1 & 7!\n")
                         continue
                     else: habit_edited = True
                 else: 

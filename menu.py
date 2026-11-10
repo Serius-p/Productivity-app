@@ -13,15 +13,15 @@ class Menu:
         #Loading saved data
         try:
             with self.data_file.open("r") as f:
-                with self.data_file2.open("r") as f2:
-                    self.goals.tasks = json.load(f)
-                    self.goals.habits = json.load(f2)
+                self.goals.tasks = json.load(f)
+            with self.data_file.open("r") as f:
+                self.goals.habits = json.load(f)
             for task in self.goals.tasks:
                 task["date"] = date.fromisoformat(task["date"])
             for habit in self.goals.habits:
                 habit["start_date"] = date.fromisoformat(habit["start_date"])
         except FileNotFoundError:
-            pass
+            print("No saved data found!")
 
     def menu_options(self):
 
@@ -32,7 +32,7 @@ class Menu:
                 print(options)
             try:
                 menu_choice = int(input("\n>>>>>: "))
-                if 0 <= menu_choice > 3:
+                if not 1 <= menu_choice <= 3:
                     print("Invalid choice!")
                     continue
             except ValueError:
