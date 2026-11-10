@@ -56,9 +56,9 @@ class Menu:
             if menu_choice == 2:
                 self.goals.goal_exist()
 
-                if self.goals.goal_exist() == 1:
+                if not self.goals.goal_exist():
                     print("No goals added yet!")
-                elif self.goals.goal_exist() == 2:
+                elif self.goals.goal_exist():
                     print("--TASKS--")
                     for number, task in enumerate(self.goals.tasks, start=1):
                         print(f"{number}. {task['name']}")

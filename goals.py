@@ -24,11 +24,11 @@ class Goals:
 
     def goal_exist(self):
         if self.tasks:
-            return 2
+            return True
         elif self.habits:
-            return 2
+            return True
         else:
-            return 1
+            return False
 
     def add_task(self):
         task_added = False
