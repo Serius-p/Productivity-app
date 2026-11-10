@@ -193,19 +193,26 @@ class Goals:
                 habit_index = habit_choice - 1
                 if 0 <= habit_index < len(self.habits):
                     habit = self.habits[habit_index]
-                    habit["name"] = input("Name: ")
-                    habit["description"] = input("Description: ")
-                    habit["start_date"] = date.fromisoformat(input("Start date (YYYY-MM-DD): "))
-                    if habit["start_date"] < date.today():
+                    habit_name = input("Name: ")
+                    habit_description = input("Description: ")
+                    habit_start_date = date.fromisoformat(input("Start date (YYYY-MM-DD): "))
+                    if habit_start_date < date.today():
                         print("Invalid date!")
                         continue
-                    habit["frequency"] = int(input("Practice Frequency / Week: "))
-                    if habit["frequency"] > 7:
+                    habit_frequency = int(input("Practice Frequency / Week: "))
+                    if 0 > habit_frequency > 7:
                         print("Invalid input!")
                         continue
-                    else:
-                        print("\nThe habit has been updated!")
-                        habit_edited = True
+                    else: habit_edited = True
+                else: 
+                    print("Invalid choice!")
+                    continue
+                if habit_edited:
+                    habit["name"] = habit_name
+                    habit["description"] = habit_description
+                    habit["start_date"] = habit_start_date
+                    habit["frequency"] = habit_frequency
+                    print("\nThe habit has been updated!")
             except ValueError:
                 print("Invalid input!")
                 continue
