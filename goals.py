@@ -128,9 +128,9 @@ class Goals:
                     print(f"\n{"-"*30}")
                     print(f"Name: {task['name']}")
                     print(f"Description: {task['description']}")
-                    print(f"Due date: {task['date']}")
+                    print(f"Due date: {task['due_date']}")
                     print(f"Completed: {task['status']}")
-                    print(f"Deadline in: {(task["date"]-self.today).days} days")
+                    print(f"Deadline in: {(task["due_date"]-self.today).days} days")
                     print(f"{"-"*30}")
                     task_viewed = True
                 else:
