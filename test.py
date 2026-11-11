@@ -88,10 +88,37 @@ class TestGoals(unittest.TestCase):
         self.assertEqual(saved_habits[0]["start_date"], "2026-01-03")
         self.assertEqual(saved_habits[0]["frequency"], 3)
 
+    def test_load_data(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            tasks_file = Path(temp_dir) / "tasks.json"
+            habits_file = Path(temp_dir) / "habits.json"
+
+            tasks_file.write_text(json.dumps([{
+                "name": "A", "due_date": "2027-01-01", "status": False,
+            }]), encoding="utf-8")
+
+            habits_file.write_text(json.dumps([{
+                "name": "Habit", "start_date": "2028-01-01", "frequency": 3,
+            }]), encoding="utf-8")
+
+            menu = Menu()
+            menu.data_file = tasks_file
+            menu.data_file2 = habits_file
+
+            menu.load_data()
+
+        self.assertEqual(menu.goals.tasks, [{
+            "name": "A", "due_date": date(2027, 1, 1), "status": False,
+        }])
+        self.assertEqual(menu.goals.habits, [{
+            "name": "Habit", "start_date": date(2028, 1, 1), "frequency": 3,
+        }])
+
+
 if __name__ == '__main__':
     unittest.main()
 
 
 #assertEqual    assertNotEqual     assertTrue             assertFalse
 #assertIs       assertIsNot        assertIsNone           assertIsNotNone
-#assertIn       assertNotIn        assertIsInInstance     assertNotIsInInstance
+#assertIn       assertNotIn        assertIsInstance     assertNotIsInstance
