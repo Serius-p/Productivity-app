@@ -1,46 +1,43 @@
-The user can add tasks with a due date, mark it as complete and delete by choice.
-The user can also add habits with a start date, add a wished practice frequency/week.
-Both tasks and habits are stored in containers and can be viewed any time with the help of the MAIN MENU.
-The tasks and habits are saved with JSON when the user exits the app from the MAIN MENU.
-The tasks and habits are also loaded when opening the app.
+# Productivity Manager
 
-Note: If the user simply closes the app, the added tasks/habits won´t be saved!
+A simple command-line productivity application written in Python. It allows users to manage tasks and habits, track deadlines, and store their data locally using JSON files.
 
-MENU Explanation:
-6-24 - Initiating imported things, as well as loading saved data if exists.
+## Features
 
-26-40 - Initiating Menu the user will see, and giving choice between fist choices; add/view task, save and exit.
+### Tasks
+- Create tasks with a name, description, and due date.
+- View task details and deadlines.
+- Edit and delete tasks.
+- Mark tasks as completed.
 
-42-54 - Simply giving choice to user what type of goal to add, task or habit.
+### Habits
+- Create habits with a name, description, and start date.
+- Set a desired practice frequency between 1 and 7 days per week.
+- View, edit, and delete habits.
 
-56-111 - First printing the added tasks & habits if exists, then depending on the users choice, calling
-         functions to execute edit/view/delete/mark as complete
+### Data Storage
+- Tasks and habits are stored locally in separate JSON files.
+- Saved data is loaded when the application starts.
+- Data is saved when the user exits through the main menu.
 
-113-120 - Saving data and exiting
+**Important:** Closing the application without using the exit option may result in unsaved changes.
 
-GOALS Explanation:
-3-7 - Initiating containers for tasks and habits, as well as importing time.
+## Requirements
 
-Function on line:
+- Python 3
 
-9 - Let´s the user choose between task or habit before any further action.
+## How to Run
 
-25 - A helping function for the "VIEW TASKS" in MENU, checks if there tasks or habits exists.
+1. Clone or download this repository.
+2. Open a terminal in the project directory.
+3. Run:
 
-33 - Adding a task, first validating the input, if successfull, adding it to tasks container.
+   `python menu.py`
 
-56 - Addind habit, same as adding task, but instead of due date - start date + frequency.
+## Project Structure
 
-84 - Editing task, validating first, then updating the tasks container.
-
-112 - Printing all details about task.
-
-140 - Deleting task.
-
-161 - Marking task as complete.
-
-184 - Editing habit, validating first, then updating the habits container.
-
-220 - Printing details about habit.
-
-246 - Deleting habit.
+- `menu.py` — Main menu, application flow, and data persistence.
+- `goals.py` — Task and habit management.
+- `test.py` — Unit tests.
+- `task_data.json` — Stored task data.
+- `habit_data.json` — Stored habit data.

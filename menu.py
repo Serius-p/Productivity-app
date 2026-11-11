@@ -10,18 +10,27 @@ class Menu:
         self.today = date.today()
         self.data_file = Path(__file__).with_name("task_data.json")
         self.data_file2 = Path(__file__).with_name("habit_data.json")
-        #Loading saved data
+    #Loading saved data
+    def load_data(self):
         try:
             with self.data_file.open("r") as f:
                 self.goals.tasks = json.load(f)
-            with self.data_file.open("r") as f:
+            with self.data_file2.open("r") as f:
                 self.goals.habits = json.load(f)
             for task in self.goals.tasks:
-                task["date"] = date.fromisoformat(task["date"])
+                task["due_date"] = date.fromisoformat(task["due_date"])
             for habit in self.goals.habits:
                 habit["start_date"] = date.fromisoformat(habit["start_date"])
         except FileNotFoundError:
             print("No saved data found!")
+
+    def save_data(self):
+        print("Saving data..")
+        with self.data_file.open("w") as f:
+            json.dump(self.goals.tasks, f, default=date.isoformat)
+        with self.data_file2.open("w") as f:
+            json.dump(self.goals.habits, f, default=date.isoformat)
+        print("Done!")
 
     def menu_options(self):
 
@@ -111,12 +120,7 @@ class Menu:
                             decision_2 = True
 
             if menu_choice == 3:
-                print("Saving data..")
-                with self.data_file.open("w") as f:
-                    json.dump(self.goals.tasks, f, default=date.isoformat)
-                with self.data_file2.open("w") as f:
-                    json.dump(self.goals.habits, f, default=date.isoformat)
-                print("Done!")
+                self.save_data()
                 break
 
 if __name__ == "__main__":
